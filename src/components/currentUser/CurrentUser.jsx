@@ -32,7 +32,7 @@ export class CurrentUser extends Component {
           this.setState({
             message: 'You have a valid token in local storage',
             username: json.data.username,
-            userId: json.data.id
+            userId: json.data._id
           })
         })
       })
