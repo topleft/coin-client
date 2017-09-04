@@ -2,12 +2,19 @@
   "name": "coin-client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3030",
   "devDependencies": {
     "react-scripts": "1.0.13"
   },
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
+    "material-ui": "^0.19.1",
+    "radium": "^0.19.4",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "request": "^2.81.0"
   },
   "scripts": {
     "start": "react-scripts start",
