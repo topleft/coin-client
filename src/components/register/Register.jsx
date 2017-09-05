@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import fetch from 'isomorphic-fetch'
+
 // components
 import { FullPageForm } from '../../layouts/FullPageForm'
 import Snackbar from 'material-ui/Snackbar'
+
 // appearance
 import Radium from 'radium'
 
@@ -23,18 +24,21 @@ export class Register extends Component {
   getInputs() {
     return [
       {
+        key: 1,
         value: this.state.username,
         type: 'text',
         placeholder: 'Username',
         onChange: (e) => this.setState({username: e.target.value})
       },
       {
+        key: 2,
         value: this.state.password,
         type: 'password',
         placeholder: 'Password',
         onChange: (e) => this.setState({password: e.target.value})
       },
       {
+        key: 3,
         value: this.state.password_confirm,
         type: 'password',
         placeholder: 'Confirm Password',
@@ -58,21 +62,16 @@ export class Register extends Component {
       return false
     }
 
-    fetch('/auth/register', {
-      method: 'post',
-      credentials: 'include', //pass cookies, for authentication
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({user})
+    this.props.handleSubmit(user)
+    .then((result) => {
+      return
     })
-    .then((res) => {
-      res.json().then( json => {
-        console.log('fetch res:', json);
-        localStorage.setItem('token', json.token);
+    .catch((err) => {
+      this.setState({
+        isOpen: true,
+        errMsg: err
       })
     })
-    .catch((err) => {console.log('fetch err:', err);})
 
     this.setState({
       username: '',

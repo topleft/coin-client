@@ -22,6 +22,7 @@ class AppLayout extends Component {
       this.setState({
         isAuthenticated: result
       })
+      if (result) this.props.history.push('/get_lowest_rate')
     })
     .catch(console.err)
 
@@ -53,6 +54,35 @@ class AppLayout extends Component {
     })
   }
 
+  register(user) {
+    return new Promise((resolve, reject) => {
+      fetch('/auth/register', {
+        method: 'post',
+        credentials: 'include', //pass cookies, for authentication
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({user})
+      })
+      .then((res) => {
+        res.json().then( (json) => {
+          if (res.status === 200 && json.token) {
+            this.setState({isAuthenticated: true})
+            localStorage.setItem('token', json.token);
+            this.props.history.push('/get_lowest_rate')
+            resolve(true)
+          } else {
+            reject(json.message)
+          }
+        })
+      })
+      .catch((err) => {
+        console.log('fetch err:', err);
+        reject('We encoutered an error while registering your user.')
+      })
+    })
+  }
+
   login(user) {
 
     return new Promise((resolve, reject) => {
@@ -68,7 +98,6 @@ class AppLayout extends Component {
         return res.json()
       })
       .then((json) => {
-        console.log(json);
         if (json.token) {
           localStorage.setItem('token', json.token)
           this.setState({isAuthenticated: true})
@@ -95,13 +124,22 @@ class AppLayout extends Component {
     )
   }
 
+  registerComponent(props) {
+    return (
+      <Register
+        handleSubmit={this.register.bind(this)}
+        {...props}
+      />
+    )
+  }
+
   renderApp() {
     const isAuthenticated = this.state.isAuthenticated
 
     const app = (
       <Switch>
-        <Route path='/login' handleSubmit={ this.login.bind(this) } render={ this.loginComponent.bind(this) }/>
-        <Route path='/register' component={ Register }/>
+        <Route path='/login' render={ this.loginComponent.bind(this) }/>
+        <Route path='/register' render={ this.registerComponent.bind(this) }/>
         <Route path='/current_user' render={ () => this.state.isAuthenticated ? <CurrentUser/> : <Redirect to='/login'/> }/>
         <Route path='/get_lowest_rate' render={ () => this.state.isAuthenticated ? <GetLowestRate/> : <Redirect to='/login'/> }/>
         <Route path='*' render={ this.loginComponent.bind(this) }/>

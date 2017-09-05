@@ -65,7 +65,6 @@ export class FullPageForm extends Component {
     }
 
   submitForm() {
-    console.log('running submit form');
     this.props.onSubmit()
   }
 
