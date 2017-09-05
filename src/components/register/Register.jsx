@@ -9,7 +9,9 @@ import Radium from 'radium'
 
 
 export class Register extends Component {
+
   constructor(props) {
+
     super(props)
 
     this.state = {
@@ -19,9 +21,11 @@ export class Register extends Component {
       isOpen: false,
       errMsg: ''
     }
+
   }
 
   getInputs() {
+
     return [
       {
         key: 1,
@@ -45,9 +49,11 @@ export class Register extends Component {
         onChange: (e) => this.setState({password_confirm: e.target.value})
       }
     ]
+
   }
 
   handleSubmit() {
+
     const user = {
       username: this.state.username,
       password: this.state.password,
@@ -78,17 +84,21 @@ export class Register extends Component {
       password: '',
       password_confirm: ''
     })
+
   }
 
   resetSnackBar() {
+
     this.setState({
       isOpen: false,
       errMsg: ''
     })
+
   }
 
 
   render() {
+
     const containerStyle = {
       width: '50%',
       marginTop: '20px',
@@ -121,7 +131,9 @@ export class Register extends Component {
         />
       </div>
     )
+
   }
+  
 }
 
 Register = Radium(Register

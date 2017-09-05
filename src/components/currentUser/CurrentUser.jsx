@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-fetch';
+
 // components
 import RaisedButton from 'material-ui/RaisedButton'
 
@@ -7,7 +8,9 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Radium from 'radium'
 
 export class CurrentUser extends Component {
+
   constructor(props) {
+    
     super(props)
 
     this.state = {
@@ -15,12 +18,16 @@ export class CurrentUser extends Component {
       username: '',
       userId: '',
     }
+
   }
 
   handleClick() {
+
     let token = localStorage.getItem('token')
 
-    if (token) {
+    if (!token) {
+      this.setState({message: 'You must log in first'})
+    } else {
       fetch('/auth/current_user', {
         method: 'get',
         headers: {
@@ -37,12 +44,12 @@ export class CurrentUser extends Component {
         })
       })
       .catch((err) => {console.log('fetch err:', err);})
-    } else {
-      this.setState({message: 'You must log in first'})
     }
+
   }
 
   render() {
+
     const containerStyle = {
       width: '50%',
       marginTop: '50px',
@@ -51,13 +58,12 @@ export class CurrentUser extends Component {
     }
 
     let userInfo = null;
+
     if (this.state.username) {
       userInfo = <div>
           <h3>username: {this.state.username}</h3>
           <h3>User Id: {this.state.userId}</h3>
         </div>
-    } else {
-
     }
 
     return (
@@ -67,6 +73,7 @@ export class CurrentUser extends Component {
         <div>{ userInfo }</div>
       </div>
     )
+
   }
 
 };

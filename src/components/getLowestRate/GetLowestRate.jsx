@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import fetch from 'isomorphic-fetch'
+
 // components
 import { FullPageForm } from '../../layouts/FullPageForm'
-import { Currency } from '../currency/Currency'
+import { CurrencyCard } from './CurrencyCard'
 import Snackbar from 'material-ui/Snackbar'
+
 // appearance
 import Radium from 'radium'
 
 
 export class GetLowestRate extends Component {
+
   constructor(props) {
     super(props)
 
@@ -17,9 +20,11 @@ export class GetLowestRate extends Component {
       isOpen: false,
       errMsg: ''
     }
+
   }
 
   getInputs() {
+
     return [
       {
         key: 1,
@@ -30,9 +35,11 @@ export class GetLowestRate extends Component {
         onChange: (event, index, value) => this.setState({currencyCode: value})
       }
     ]
+
   }
 
   handleSubmit() {
+
     const currencyCode = this.state.currencyCode
     let token = localStorage.getItem('token')
 
@@ -53,20 +60,25 @@ export class GetLowestRate extends Component {
     this.setState({
       currencyCode: null,
     })
+
   }
 
   resetSnackBar() {
+
     this.setState({
       isOpen: false,
       errMsg: ''
     })
+
   }
 
   renderCurrencies() {
+
     if (this.state.currencies.length) {
       let currencies = this.state.currencies.map((c, i) =>
-        <Currency
+        <CurrencyCard
           key={ i }
+          currencyCode={c.abbreviation}
           name={c.name}
           USDValueInPennies={c.USDValueInPennies}
           source={c.source}
@@ -74,9 +86,11 @@ export class GetLowestRate extends Component {
       )
       return currencies
     }
+
   }
 
   render() {
+
     const containerStyle = {
       width: '50%',
       marginTop: '40px',
@@ -111,6 +125,7 @@ export class GetLowestRate extends Component {
       </div>
     )
   }
+
 }
 
 GetLowestRate = Radium(GetLowestRate)

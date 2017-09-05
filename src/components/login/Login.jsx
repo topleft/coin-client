@@ -5,29 +5,35 @@ import { FullPageForm } from '../../layouts/FullPageForm'
 import Radium from 'radium'
 
 export class Login extends Component {
+
   constructor(props) {
+
     super(props)
+
     this.state = {
       username: '',
       password: ''
     }
+
   }
 
   handleSubmit() {
+
     const user = {
       username: this.state.username,
       password: this.state.password
     }
+
     this.props.handleSubmit(user)
     .catch((err) => {
       // TODO - pop up Toaster
       console.log(err);
     })
 
-
   }
 
   getInputs() {
+
     return [
       {
         key: 1,
@@ -44,9 +50,11 @@ export class Login extends Component {
         onChange: (e) => this.setState({password: e.target.value})
       }
     ]
+
   }
 
   render() {
+
     const containerStyle = {
       width: '50%',
       marginTop: '20px',
@@ -63,7 +71,9 @@ export class Login extends Component {
         />
       </div>
     )
+
   }
+  
 }
 
 Login = Radium(Login)

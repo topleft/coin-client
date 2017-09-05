@@ -16,8 +16,11 @@ import { CustomToolbar } from './layouts/CustomToolbar'
 class AppLayout extends Component {
 
   constructor(props) {
+
     super(props)
+
     this.state = {}
+
     this.checkAuthenticated()
     .then((result) => {
       this.setState({
@@ -25,14 +28,19 @@ class AppLayout extends Component {
       })
       if (result) this.props.history.push('/get_lowest_rate')
     })
-    .catch(console.err)
+    .catch(console.error)
 
   }
 
   checkAuthenticated(component) {
+
     let token = localStorage.getItem('token')
+
     return new Promise((resolve, reject) => {
-      if (token) {
+
+      if (!token) {
+        resolve(false)
+      } else {
         fetch('/auth/current_user', {
           method: 'get',
           headers: {
@@ -46,27 +54,28 @@ class AppLayout extends Component {
           if (json.data._id) resolve(true)
         })
         .catch((err) => {
-          console.log('fetch err:', err);
           reject(err)
         })
-      } else {
-        resolve(false)
       }
+
     })
+
   }
 
   register(user) {
+
     return new Promise((resolve, reject) => {
+
       fetch('/auth/register', {
         method: 'post',
-        credentials: 'include', //pass cookies, for authentication
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({user})
       })
       .then((res) => {
-        res.json().then( (json) => {
+        res.json()
+        .then((json) => {
           if (res.status === 200 && json.token) {
             this.setState({isAuthenticated: true})
             localStorage.setItem('token', json.token);
@@ -78,10 +87,12 @@ class AppLayout extends Component {
         })
       })
       .catch((err) => {
-        console.log('fetch err:', err);
+        console.error(err);
         reject('We encoutered an error while registering your user.')
       })
+
     })
+
   }
 
   login(user) {
@@ -109,39 +120,47 @@ class AppLayout extends Component {
         }
       })
       .catch((err) => {
-        console.log('fetch err', err)
+        console.error(err)
         reject(false)
       })
 
     })
+
   }
 
   logout() {
+
     localStorage.clear()
     this.setState({
       isAuthenticated: false
     })
+
   }
 
   loginComponent(props) {
+
     return (
       <Login
         handleSubmit={this.login.bind(this)}
         {...props}
       />
     )
+
   }
 
   registerComponent(props) {
+
     return (
       <Register
         handleSubmit={this.register.bind(this)}
         {...props}
       />
     )
+
   }
 
   renderApp() {
+
     const isAuthenticated = this.state.isAuthenticated
 
     const app = (
@@ -153,14 +172,16 @@ class AppLayout extends Component {
         <Route path='*' render={ this.loginComponent.bind(this) }/>
       </Switch>
     )
+
     const loading = (<FullPageLoading/>)
 
     return isAuthenticated === undefined ? loading : app
   }
 
   render () {
+
     return (
-      <MuiThemeProvider >
+      <MuiThemeProvider>
         <div>
           <div className="container">
             <CustomToolbar logout={this.logout.bind(this)} isAuthenticated={this.state.isAuthenticated}/>
@@ -169,6 +190,7 @@ class AppLayout extends Component {
         </div>
       </MuiThemeProvider>
     )
+
   }
 
 }

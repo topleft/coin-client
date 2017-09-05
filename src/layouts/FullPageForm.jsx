@@ -7,7 +7,9 @@ import Radium from 'radium'
 import { colors } from '../colors'
 
 export class FullPageForm extends Component {
+
   renderInputs() {
+
     const floatingLabelShrinkStyle = {
       color: colors.blue
     }
@@ -62,13 +64,17 @@ export class FullPageForm extends Component {
         return field
 
       })
+      
     }
 
   submitForm() {
+
     this.props.onSubmit()
+
   }
 
   render() {
+
     const submitStyle = {
       marginTop: '20px',
     }
@@ -89,7 +95,9 @@ export class FullPageForm extends Component {
         </form>
       </div>
     )
+
   }
+
 }
 
 FullPageForm = Radium(FullPageForm)

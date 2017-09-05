@@ -3,18 +3,23 @@ import React, { Component } from 'react'
 // components
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import FlatButton from 'material-ui/FlatButton'
+
 // appearance
 import Radium from 'radium'
 
 export class CustomToolbar extends Component {
 
   handleLogout() {
+
     this.props.logout();
+
   }
 
   renderButtons() {
+
     let buttons;
     let isAuthenticated = this.props.isAuthenticated
+
     isAuthenticated ?
     buttons = (
       <div>
@@ -30,11 +35,13 @@ export class CustomToolbar extends Component {
         <FlatButton label="Register" primary={true} href="/register"/>
       </div>
     )
+
     return buttons
 
   }
 
   render() {
+
       return (
         <Toolbar>
           <ToolbarTitle text="Coin" />
@@ -43,8 +50,8 @@ export class CustomToolbar extends Component {
           </ToolbarGroup>
         </Toolbar>
       );
-    }
 
+    }
 
 }
 
