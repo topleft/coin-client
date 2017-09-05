@@ -11,6 +11,7 @@ import { Register } from './components/register/Register'
 import { CurrentUser } from './components/currentUser/CurrentUser'
 import { GetLowestRate } from './components/getLowestRate/GetLowestRate'
 import { FullPageLoading } from './layouts/FullPageLoading'
+import { CustomToolbar } from './layouts/CustomToolbar'
 
 class AppLayout extends Component {
 
@@ -101,7 +102,7 @@ class AppLayout extends Component {
         if (json.token) {
           localStorage.setItem('token', json.token)
           this.setState({isAuthenticated: true})
-          this.props.history.push('/current_user');
+          this.props.history.push('/get_lowest_rate');
           resolve(true)
         } else {
           resolve(false)
@@ -112,6 +113,13 @@ class AppLayout extends Component {
         reject(false)
       })
 
+    })
+  }
+
+  logout() {
+    localStorage.clear()
+    this.setState({
+      isAuthenticated: false
     })
   }
 
@@ -155,6 +163,7 @@ class AppLayout extends Component {
       <MuiThemeProvider >
         <div>
           <div className="container">
+            <CustomToolbar logout={this.logout.bind(this)} isAuthenticated={this.state.isAuthenticated}/>
             {this.renderApp()}
           </div>
         </div>

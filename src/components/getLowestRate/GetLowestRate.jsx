@@ -79,7 +79,7 @@ export class GetLowestRate extends Component {
   render() {
     const containerStyle = {
       width: '50%',
-      marginTop: '20px',
+      marginTop: '40px',
       marginLeft: 'auto',
       marginRight: 'auto'
     }
@@ -95,7 +95,7 @@ export class GetLowestRate extends Component {
     return (
       <div style={ containerStyle }>
         <FullPageForm
-          header='GetLowestRate'
+          header='Get Lowest Rate'
           onSubmit={ this.handleSubmit.bind(this) }
           inputs={ this.getInputs() }
         />
