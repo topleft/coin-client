@@ -1,6 +1,6 @@
 ### Steps to run locally:
 
-**Requires [github.com/topleft/coin-api](github.com/topleft/coin-api) - clone down that project too**
+**Requires [github.com/topleft/coin-api](https://github.com/topleft/coin-api) - clone down that project too**
 
 1. `git clone git@github.com:topleft/coin-client.git`
 1. `cd coin-client`
