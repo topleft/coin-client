@@ -9,6 +9,7 @@ import './index.css';
 import { Login } from './components/login/Login'
 import { Register } from './components/register/Register'
 import { CurrentUser } from './components/currentUser/CurrentUser'
+import { GetLowestRate } from './components/getLowestRate/GetLowestRate'
 import { FullPageLoading } from './layouts/FullPageLoading'
 
 class AppLayout extends Component {
@@ -21,7 +22,6 @@ class AppLayout extends Component {
       this.setState({
         isAuthenticated: result
       })
-      if (result) this.props.history.push('/current_user');
     })
     .catch(console.err)
 
@@ -103,6 +103,7 @@ class AppLayout extends Component {
         <Route path='/login' handleSubmit={ this.login.bind(this) } render={ this.loginComponent.bind(this) }/>
         <Route path='/register' component={ Register }/>
         <Route path='/current_user' render={ () => this.state.isAuthenticated ? <CurrentUser/> : <Redirect to='/login'/> }/>
+        <Route path='/get_lowest_rate' render={ () => this.state.isAuthenticated ? <GetLowestRate/> : <Redirect to='/login'/> }/>
         <Route path='*' render={ this.loginComponent.bind(this) }/>
       </Switch>
     )

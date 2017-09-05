@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // components
-import TextField from 'material-ui/TextField'
+import { TextField, SelectField, MenuItem } from 'material-ui'
 import RaisedButton from 'material-ui/RaisedButton'
 // appearance
 import Radium from 'radium'
@@ -17,20 +17,52 @@ export class FullPageForm extends Component {
     }
 
     return this.props.inputs.map((input) => {
-      return (
-        <TextField
-          key={ input.key }
-          onChange={ input.onChange }
-          value={ input.value }
-          type={ input.type }
-          floatingLabelText={ input.placeholder }
-          floatingLabelShrinkStyle={ floatingLabelShrinkStyle }
-          underlineFocusStyle={ underlineFocusStyle }
-          fullWidth={ true }
-        />
-      )
-    })
-  }
+
+      let field;
+
+      switch (input.type) {
+        case 'text':
+        case 'password':
+          field = (
+            <TextField
+              key={ input.key }
+              onChange={ input.onChange }
+              value={ input.value }
+              type={ input.type }
+              floatingLabelText={ input.placeholder }
+              floatingLabelShrinkStyle={ floatingLabelShrinkStyle }
+              underlineFocusStyle={ underlineFocusStyle }
+              fullWidth={ true }
+            />
+          )
+          break
+        case 'select':
+        default:
+          input.options = input.options || []
+          let options = input.options.map((option, i) =>
+            <MenuItem key={ i } value={ option } primaryText={ option } />
+          )
+          field = (
+            <SelectField
+              key={ input.key }
+              onChange={ input.onChange }
+              value={ input.value }
+              type={ input.type }
+              floatingLabelText={ input.placeholder }
+              floatingLabelShrinkStyle={ floatingLabelShrinkStyle }
+              underlineFocusStyle={ underlineFocusStyle }
+              fullWidth={ true }
+            >
+              {options}
+            </SelectField>
+          )
+          break
+        }
+
+        return field
+
+      })
+    }
 
   submitForm() {
     console.log('running submit form');

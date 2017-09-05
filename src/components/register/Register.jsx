@@ -58,9 +58,6 @@ export class Register extends Component {
       return false
     }
 
-    let data = new FormData(JSON.stringify({user}));
-    data.append('json', JSON.stringify({user}));
-
     fetch('/auth/register', {
       method: 'post',
       credentials: 'include', //pass cookies, for authentication

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import fetch from 'isomorphic-fetch';
 
 import { FullPageForm } from '../../layouts/FullPageForm'
 

@@ -70,3 +70,5 @@ export class CurrentUser extends Component {
   }
 
 };
+
+CurrentUser = Radium(CurrentUser)
