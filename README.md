@@ -1,14 +1,15 @@
 ### Steps to run locally:
 
-1. Clone the repo
+**Requires [github.com/topleft/coin-api](github.com/topleft/coin-api) - clone down that project too**
+
+1. `git clone git@github.com:topleft/coin-client.git`
 1. `cd coin-client`
 1. `npm install`
 1. `npm start`
 
+#### Built with
 
-### Built with
-
-1. [Create React App](https://github.com/facebookincubator/create-react-app)
-1. [React Router](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom)
-1. [Materialize UI](http://www.material-ui.com/)
-1. [Radium](https://github.com/FormidableLabs/radium)
+* [Create React App](https://github.com/facebookincubator/create-react-app)
+* [React Router](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom)
+* [Materialize UI](http://www.material-ui.com/)
+* [Radium](https://github.com/FormidableLabs/radium)
