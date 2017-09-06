@@ -7,6 +7,10 @@
 1. `npm install`
 1. `npm start`
 
+### Base Code:
+
+Used create react app and the FullPageForm component from one of my previous projects.
+
 #### Built with
 
 * [Create React App](https://github.com/facebookincubator/create-react-app)

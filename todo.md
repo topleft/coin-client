@@ -13,5 +13,5 @@
 1. ~~documentation in readme~~
   - ~~summary~~
   - ~~how to fire it up locally~~
-1. stylize currency results into cards with image
+1. ~~stylize currency results into cards with image~~
 1. push to github and make version
