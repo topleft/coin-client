@@ -8,10 +8,13 @@ const proxy = require('express-http-proxy')
 const port = process.env.PORT || 3000
 
 app.use(express.static('./build'))
-console.log('process.env.BACKEND_ADDR', process.env.BACKEND_ADDR);
 // use this proxy to send any fetch to our back-end server
 app.use('/api', proxy(process.env.BACKEND_ADDR || 'http://localhost:3030', {
-  forwardPath: (req) => `/api${req.url}`
+  forwardPath: (req) => {
+    console.log("req.url", req.url);
+    console.log('process.env.BACKEND_ADDR', process.env.BACKEND_ADDR);
+    `/api${req.url}`
+  }
 }))
 
 app.get('/*', function (req, res) {

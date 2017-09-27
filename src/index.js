@@ -99,7 +99,7 @@ class AppLayout extends Component {
 
     return new Promise((resolve, reject) => {
 
-      fetch('/auth/login', {
+      fetch('/api/auth/login', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'
