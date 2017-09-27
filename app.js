@@ -13,7 +13,7 @@ app.use('/api', proxy(process.env.BACKEND_ADDR || 'http://localhost:3030', {
   forwardPath: (req) => {
     console.log("req.url", req.url);
     console.log('process.env.BACKEND_ADDR', process.env.BACKEND_ADDR);
-    `/api${req.url}`
+    return `/api${req.url}`;
   }
 }))
 

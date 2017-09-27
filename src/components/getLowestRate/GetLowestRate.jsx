@@ -43,7 +43,7 @@ export class GetLowestRate extends Component {
     const currencyCode = this.state.currencyCode
     let token = localStorage.getItem('token')
 
-    fetch(`/currency/getLowestRate/${currencyCode}`, {
+    fetch(`/api/currency/getLowestRate/${currencyCode}`, {
       method: 'get',
       headers: {
         'Authorization': `Bearer ${token}`

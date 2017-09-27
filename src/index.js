@@ -41,7 +41,7 @@ class AppLayout extends Component {
       if (!token) {
         resolve(false)
       } else {
-        fetch('/auth/current_user', {
+        fetch('/api/auth/current_user', {
           method: 'get',
           headers: {
             'Authorization': 'Bearer ' + token
@@ -66,7 +66,7 @@ class AppLayout extends Component {
 
     return new Promise((resolve, reject) => {
 
-      fetch('/auth/register', {
+      fetch('/api/auth/register', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'

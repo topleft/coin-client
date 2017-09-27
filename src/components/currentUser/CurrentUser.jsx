@@ -10,7 +10,7 @@ import Radium from 'radium'
 export class CurrentUser extends Component {
 
   constructor(props) {
-    
+
     super(props)
 
     this.state = {
@@ -28,7 +28,7 @@ export class CurrentUser extends Component {
     if (!token) {
       this.setState({message: 'You must log in first'})
     } else {
-      fetch('/auth/current_user', {
+      fetch('/api/auth/current_user', {
         method: 'get',
         headers: {
           'Authorization': 'Bearer ' + token
