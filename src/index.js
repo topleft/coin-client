@@ -3,22 +3,33 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import fetch from 'isomorphic-fetch';
+import { Provider } from 'react-redux'
+import Snackbar from 'material-ui/Snackbar'
+
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as errorActions from './actions/errorActions';
+// console.log('errorActions', errorActions)
 
 import './index.css';
 
-import { Login } from './components/login/Login'
+import Login from './components/login/Login'
 import { Register } from './components/register/Register'
 import { CurrentUser } from './components/currentUser/CurrentUser'
 import { GetLowestRate } from './components/getLowestRate/GetLowestRate'
 import { FullPageLoading } from './layouts/FullPageLoading'
 import { CustomToolbar } from './layouts/CustomToolbar'
 
+import configureStore from './store/configureStore';
+const store = configureStore();
+
 class AppLayout extends Component {
 
   constructor(props) {
 
     super(props)
-
     this.state = {}
 
     this.checkAuthenticated()
@@ -116,7 +127,7 @@ class AppLayout extends Component {
           this.props.history.push('/get_lowest_rate');
           resolve(true)
         } else {
-          resolve(false)
+          reject(false)
         }
       })
       .catch((err) => {
@@ -178,14 +189,31 @@ class AppLayout extends Component {
     return isAuthenticated === undefined ? loading : app
   }
 
+  
   render () {
-
+    
+    const errSnackBarStyle = {
+      backgroundColor: 'red'
+    }
+  
+    const errSnackBarContentStyle = {
+      color: 'white'
+    }
+    
     return (
       <MuiThemeProvider>
         <div>
           <div className="container">
             <CustomToolbar logout={this.logout.bind(this)} isAuthenticated={this.state.isAuthenticated}/>
             {this.renderApp()}
+            <Snackbar
+              open={this.props.error.isOpen}
+              message={this.props.error.errMsg}
+              autoHideDuration={4000}
+              bodyStyle={errSnackBarStyle}
+              contentStyle={errSnackBarContentStyle}
+              onRequestClose={this.props.errorActions.resetError.bind(this)}
+            />
           </div>
         </div>
       </MuiThemeProvider>
@@ -195,11 +223,30 @@ class AppLayout extends Component {
 
 }
 
+function mapStateToProps(state) {
+  return {
+    error: state.error
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    errorActions: bindActionCreators(errorActions, dispatch)
+  };
+}
+
+AppLayout = connect(  
+  mapStateToProps,
+  mapDispatchToProps
+)(AppLayout)
+
 ReactDOM.render(
-  <BrowserRouter>
-    <div>
-      <Route path='/' component={ AppLayout }/>
-    </div>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <div>
+        <Route path='/' component={ AppLayout }/>
+      </div>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
+

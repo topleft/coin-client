@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import { FullPageForm } from '../../layouts/FullPageForm'
+import * as errorActions from '../../actions/errorActions';
 
-import Radium from 'radium'
+import { FullPageForm } from '../../layouts/FullPageForm';
 
-export class Login extends Component {
+import Radium from 'radium';
+
+class Login extends Component {
 
   constructor(props) {
 
@@ -26,8 +31,7 @@ export class Login extends Component {
 
     this.props.handleSubmit(user)
     .catch((err) => {
-      // TODO - pop up Toaster
-      console.log(err);
+      this.props.errorActions.setError('Login Failed');
     })
 
   }
@@ -76,4 +80,26 @@ export class Login extends Component {
   
 }
 
+// DO I NEED PROPTYPES? 
+// stuffList.propTypes = {
+//   stuffActions: PropTypes.object,
+//   stuffs: PropTypes.array
+// };
+
+function mapStateToProps(state) {
+  return {
+    stuffs: state.error
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    errorActions: bindActionCreators(errorActions, dispatch)
+  };
+}
+
 Login = Radium(Login)
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login)
